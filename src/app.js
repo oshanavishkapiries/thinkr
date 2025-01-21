@@ -8,9 +8,28 @@ const port = process.env.PORT || 3000;
 const errorHandler = require('./utils/errorHandler');
 const AppError = require('./utils/AppError')
 const router = require('./routers');
+const logger = require("./logger");
+const morgan = require("morgan");
+
+const morganFormat = ":method :url :status :response-time ms";
 
 // Middleware
 app.use(express.json());
+app.use(
+  morgan(morganFormat, {
+    stream: {
+      write: (message) => {
+        const logObject = {
+          method: message.split(" ")[0],
+          url: message.split(" ")[1],
+          status: message.split(" ")[2],
+          responseTime: message.split(" ")[3],
+        };
+        logger.info(JSON.stringify(logObject));
+      },
+    },
+  })
+);
 
 // Routes
 app.use('/api', router);
