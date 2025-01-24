@@ -2,7 +2,7 @@ require('dotenv').config();
 // src/app.js
 const express = require('express');
 const app = express();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3125;
 
 // imports
 const errorHandler = require('./utils/errorHandler');
@@ -32,7 +32,8 @@ app.use(
 );
 
 // Routes
-app.use('/api', router);
+app.use('/api/v1/', router);
+
 
 // 404 Route Handler
 app.all('*', (req, res, next) => {

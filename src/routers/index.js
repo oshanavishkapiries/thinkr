@@ -1,12 +1,14 @@
 const express = require('express');
-const getServerStatus = require('../utils/helthcheck')
-const exampleRouter = require('./exampleRouter');
-
-
 const router = express.Router();
 
-router.use('/health' , getServerStatus)
-router.use('/example', exampleRouter);
+// fuctions
+const getServerStatus = require('../utils/helthcheck')
+
+// Routers
+const imageRouter = require('./imageRouter');
+
+router.use('/health', getServerStatus)
+router.use('/uploads', imageRouter);
 
 
 module.exports = router;
